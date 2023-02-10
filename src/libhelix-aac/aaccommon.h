@@ -50,7 +50,7 @@
 #include <pgmspace.h>
 
 // Can't fit in ESP8266 RAM
-#ifndef ESP8266
+#ifndef ESP8266 && defined(HELIX_AAC_SBR)
   #define AAC_ENABLE_SBR 1 
 #endif
 
@@ -63,7 +63,9 @@
 #define	SYNCWORDH			0xff
 #define	SYNCWORDL			0xf0
 
+#ifndef MAX_NCHANS_ELEM
 #define MAX_NCHANS_ELEM		2	/* max number of channels in any single bitstream element (SCE,CPE,CCE,LFE) */
+#endif // MAX_NCHANS_ELEM
 
 #define ADTS_HEADER_BYTES	7
 #define NUM_SAMPLE_RATES	12
