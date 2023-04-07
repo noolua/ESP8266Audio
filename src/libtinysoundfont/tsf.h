@@ -149,7 +149,13 @@ TSFDEF void tsf_set_output(tsf* f, enum TSFOutputMode outputmode, int samplerate
 //   bank: instrument bank number (alternative to preset_index)
 //   preset_number: preset number (alternative to preset_index)
 //   (bank_note_on returns 0 if preset does not exist, otherwise 1)
+#ifdef HOOKED_MIDINOTE
 TSFDEF void tsf_note_on(tsf* f, int preset_index, int key, float vel);
+TSFDEF void tsf_note_on_impl(tsf* f, int preset_index, int key, float vel);
+#else
+TSFDEF void tsf_note_on(tsf* f, int preset_index, int key, float vel);
+#endif //HOOKED_MIDINOTE
+
 TSFDEF int  tsf_bank_note_on(tsf* f, int bank, int preset_number, int key, float vel);
 
 // Stop playing a note
@@ -1680,8 +1686,11 @@ TSFDEF void tsf_set_output(tsf* f, enum TSFOutputMode outputmode, int samplerate
 	f->outSampleRate = (float)(samplerate >= 1 ? samplerate : 44100.0f);
 	f->globalGainDB = global_gain_db;
 }
-
+#ifdef HOOKED_MIDINOTE
+TSFDEF void tsf_note_on_impl(tsf* f, int preset_index, int key, float vel)
+#else
 TSFDEF void tsf_note_on(tsf* f, int preset_index, int key, float vel)
+#endif // 
 {
 	short midiVelocity = (short)(vel * 127);
 	int voicePlayIndex;
