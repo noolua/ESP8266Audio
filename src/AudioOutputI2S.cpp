@@ -276,7 +276,10 @@ bool AudioOutputI2S::begin(bool txDAC)
     (void)txDAC;
     if (!i2sOn) {
         i2s.setBCLK(bclkPin);
-	i2s.setDATA(doutPin);
+        i2s.setDATA(doutPin);
+        i2s.setBuffers(4, 256);
+        if(lsb_justified)
+          i2s.setLSBJFormat();
         i2s.begin(hertz);
     }
   #endif
