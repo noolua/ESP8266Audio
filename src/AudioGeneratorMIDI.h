@@ -23,7 +23,7 @@
 
 #if (__GNUC__ == 8) && (__GNUC_MINOR__ < 4)
 // Do not build, GCC8 has a compiler bug
-#else // __GNUC__ == 8
+// #else // __GNUC__ == 8
 
 #include "AudioGenerator.h"
 
